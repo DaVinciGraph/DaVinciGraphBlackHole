@@ -11,7 +11,7 @@ pragma solidity ^0.8.9;
 import "./hedera/SafeHTS.sol";
 
 // Imports the ReentrancyGuard contract from the OpenZeppelin Contracts package, which helps protect against reentrancy attacks.
-import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 contract DaVinciGraphNFTLocker is ReentrancyGuard {
     uint256 public fee;
@@ -86,9 +86,7 @@ contract DaVinciGraphNFTLocker is ReentrancyGuard {
 
         require(lockDurationInSeconds > 0, "Lock duration should be greater than 0" );
 
-        require(serialNumbers.length > 0, "Serial numbers shouldn't be empty");
-
-        require(serialNumbers.length <= 10, "Serial numbers shouldn't be more than 10");
+        require(serialNumbers.length > 0 && serialNumbers.length <= 10, "Serial numbers quantity must be between 1 to 10");
 
         require(_lockedNFTs[msg.sender][token].quantity == 0, "You have already locked this token" );
 
@@ -115,25 +113,25 @@ contract DaVinciGraphNFTLocker is ReentrancyGuard {
         emit NFTLocked(msg.sender, token, serialNumbers, lockDurationInSeconds);
     }
 
-    function addNfts(address token, int64[] memory additionalSerialNumbers) external payable {
+    function increaseLockedNfts(address token, int64[] memory additionalSerialNumbers) external payable {
         require(msg.value >= fee, "Insufficient payment");
 
         require(token != address(0), "Token address must be provided");
 
-        require(additionalSerialNumbers.length > 0, "Serial numbers shouldn't be empty");
-
-        require(additionalSerialNumbers.length <= 10, "Serial numbers shouldn't be more than 10");
+        uint256 additionalSerialNumberLength = additionalSerialNumbers.length;
+        
+        require(additionalSerialNumberLength > 0 && additionalSerialNumberLength <= 10, "Serial numbers quantity must be between 1 to 10");
 
         require(_lockedNFTs[msg.sender][token].quantity > 0, "You have not locked this token" );
 
         // Ensures overall user has only 20 nft locked of a token
-        require(_lockedNFTs[msg.sender][token].quantity + additionalSerialNumbers.length <= 20, "You are only allowed to lock 30 NFTs of the same token");
+        require(uint256(int256(_lockedNFTs[msg.sender][token].quantity)) + additionalSerialNumberLength <= 20, "You are only allowed to lock 30 NFTs of the same token");
         
         int64 quantity = 0; // counter of non-duplicated nfts
-        address[] memory sender = new address[](additionalSerialNumbers.length);
-        address[] memory receiver = new address[](additionalSerialNumbers.length);
+        address[] memory sender = new address[](additionalSerialNumberLength);
+        address[] memory receiver = new address[](additionalSerialNumberLength);
 
-        for (uint i = 0; i < additionalSerialNumbers.length; i++) {
+        for (uint i = 0; i < additionalSerialNumberLength; i++) {
             sender[i] = msg.sender;
             receiver[i] = address(this);
             if (_lockedNFTs[msg.sender][token].serialNumbers[additionalSerialNumbers[i]] == false) {
@@ -168,9 +166,7 @@ contract DaVinciGraphNFTLocker is ReentrancyGuard {
     function withdrawNFTs(address token, int64[] memory serialNumbers) external payable {
         require(token != address(0), "Token address must be provided");
 
-        require(serialNumbers.length > 0, "Serial numbers shouldn't be empty");
-
-        require(serialNumbers.length <= 10, "Unable to transfer more than 10 item on each transaction");
+        require(serialNumbers.length > 0 && serialNumbers.length <= 10, "Serial numbers quantity must be between 1 to 10");
 
         require(_lockedNFTs[msg.sender][token].quantity > 0, "You have not locked this token" );
         
