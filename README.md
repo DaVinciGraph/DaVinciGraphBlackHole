@@ -4,7 +4,7 @@
 DaVinciGraph Black Hole is a groundbreaking smart contract on the Hedera Hashgraph, designed to permanently remove fungible tokens from circulation, including those without an admin key. Traditionally, only tokens with an admin key can be burned, but with this smart contract, tokens without an admin key can also be effectively 'burned'.
 
 ## Quick Links 🌐
-- **Interface:** [https://davincigraph.io/devs](https://davincigraph.io/devs)
+- **Interface:** [https://davincigraph.io/burns/tokens](https://davincigraph.io/burns/tokens)
 - **Hashscan Link:** [https://hashscan.io/mainnet/contract/0.0.3158042](https://hashscan.io/mainnet/contract/0.0.3158042)
 
 ## Features ⭐
