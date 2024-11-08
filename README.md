@@ -19,7 +19,7 @@ DaVinciGraph Black Hole is a groundbreaking smart contract on the Hedera Hashgra
 3. **Verify Transaction:** All token actions are traceable and publicly verifiable on Hashscan: [https://hashscan.io/mainnet/contract/0.0.3158042](https://hashscan.io/mainnet/contract/0.0.3158042)
 
 ## Getting Started 🚀
-1. **Visit the Interface:** Learn more and interact with DaVinciGraph Black Hole at [https://davincigraph.io/devs](https://davincigraph.io/devs)
+1. **Visit the Interface:** Learn more and interact with DaVinciGraph Black Hole at [https://davincigraph.io/burns/tokens](https://davincigraph.io/burns/tokens)
 2. **Use the Hashscan Link:** Monitor the contract and its actions live on Hashscan at [https://hashscan.io/mainnet/contract/0.0.3158042](https://hashscan.io/mainnet/contract/0.0.3158042)
 
 ## Roadmap 🗺️
